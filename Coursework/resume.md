@@ -26,7 +26,6 @@ https://markoliks.github.io/2025_2026-introduction-in-web-tech-U4125-popov_m_a/
 
 Использованные команды:
 
-```bash
 pip install mkdocs
 pip install mkdocs-material
 mkdocs --version
@@ -111,5 +110,3 @@ mkdocs build
  • организация структуры сайта
  • локальное тестирование
  • сборка и публикация проекта
-
-<img width="1899" height="971" alt="image" src="https://github.com/user-attachments/assets/7a2973c6-81c8-47bf-8d97-bbfcc76408c4" />
