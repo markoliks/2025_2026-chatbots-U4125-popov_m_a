@@ -1,4 +1,4 @@
-# DevOps Lab 2
+# Lab 2
 
 University: [ITMO University](https://itmo.ru)  
 Faculty: [FICT](https://fict.itmo.ru)  
@@ -130,14 +130,14 @@ df[df["name"].str.contains(name, case=False)]
 
 ⸻
 
-12. Используемые библиотеки
+## 12. Используемые библиотеки
  • python-telegram-bot
  • python-dotenv
  • pandas
 
 ⸻
 
-13. Тестирование
+## 13. Тестирование
 
 Были протестированы команды:
  • /help
@@ -149,7 +149,8 @@ df[df["name"].str.contains(name, case=False)]
 
 ⸻
 
-14. Скриншоты работы
+## 14. Скриншоты работы
+
 
 <img width="1241" height="987" alt="image" src="https://github.com/user-attachments/assets/bab21d9d-e6b8-4c47-8e48-3e805a99157a" />
 <img width="542" height="996" alt="image" src="https://github.com/user-attachments/assets/b46d66f6-f06f-41e0-a2c6-dbaff2b2c7db" />
