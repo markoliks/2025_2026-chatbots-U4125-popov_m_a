@@ -132,14 +132,16 @@ df[df["name"].str.contains(name, case=False)]
 
 ⸻
 
-## 12. Используемые библиотеки
+
+
+12. Используемые библиотеки
  • python-telegram-bot
  • python-dotenv
  • pandas
 
 ⸻
 
-## 13. Тестирование
+13. Тестирование
 
 Были протестированы команды:
  • /help
@@ -151,7 +153,7 @@ df[df["name"].str.contains(name, case=False)]
 
 ⸻
 
-## 14. Скриншоты работы
+14. Скриншоты работы
 
 
 <img width="1241" height="987" alt="image" src="https://github.com/user-attachments/assets/bab21d9d-e6b8-4c47-8e48-3e805a99157a" />
