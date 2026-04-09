@@ -1,108 +1,68 @@
 University: [ITMO University](https://itmo.ru)  
 Faculty: [FICT](https://fict.itmo.ru)  
-Course: [Введение в веб технологии](https://itmo-ict-faculty.github.io)  
+Course: Vibe Coding: AI-боты для бизнеса  
 Year: 2025/2026  
 Group: U4125  
-Author: Popv Mark  
+Author: Popov Mark  
 Lab: Lab1  
-Date of create: 16.03.2026  
+Date of create: 09.04.2026  
 Date of finished: -
 # Лабораторная работа №1
-## Основы работы с Docker
 
-### Цель работы
-Изучить основы работы с Docker: запуск контейнеров, работу с образами и томами.
+# 📌 Описание работы
 
-## 1. Проверка установки Docker
+В данной лабораторной работе был разработан Telegram-бот с использованием Python и библиотеки python-telegram-bot.
 
-Команда:
-
-docker –version
-<img width="1898" height="1022" alt="image" src="https://github.com/user-attachments/assets/857b1e7f-41e7-442b-824e-9adb029cd68d" />
+Бот реализует обработку команд пользователя и отправку ответов.
 
 
-## 2. Запуск тестового контейнера
+# ⚙️ Используемые технологии
 
-Команда:
-
-docker run hello-world
-
-Docker скачал образ hello-world и запустил тестовый контейнер.
-
-
-## 3. Работа с образами
-
-Просмотр образов:
-
-docker images
-
-Просмотр запущенных контейнеров:
-
-docker ps
-
-Просмотр всех контейнеров:
-
-docker ps -a
+- Python  
+- python-telegram-bot  
+- python-dotenv  
+- Telegram Bot API  
 
 
-## 4. Работа с контейнером Ubuntu
+# 🏗 Структура проекта
 
-Запуск контейнера:
-
-docker run -it ubuntu bash
-
-Установка пакета curl:
-
-apt update
-apt install curl
-
-Проверка:
-
-curl –version
-
-<img width="1875" height="1010" alt="image" src="https://github.com/user-attachments/assets/c08484e0-da64-4a9b-936d-ab3ebea186d5" />
-
-## 5. Запуск веб-сервера nginx
-
-Запуск контейнера:
-
-docker run -d -p 8080:80 –name web-server nginx:alpine
-
-После запуска сервер стал доступен по адресу:
-
-http://localhost:8080
-
-<img width="1891" height="1011" alt="image" src="https://github.com/user-attachments/assets/a16210f7-bc1a-4dfc-a4c3-46ba9dff0f96" />
+lab1/
+├── bot.py
+├── requirements.txt
+├── .env
+├── .env.example
+└── lab1_report.md
 
 
-## 6. Управление контейнерами
+# 🚀 Функционал бота
 
-Просмотр контейнеров:
+Реализованы команды:
 
-docker ps
+- /start — приветствие  
+- /help — помощь  
+- /about — информация  
+- /contacts — контакты  
+- /team — команда  
+- /events — события  
 
-Остановка контейнера:
 
-docker stop web-server
+# 🔐 Работа с .env
 
-Запуск контейнера:
+Токен хранится в файле `.env`, что обеспечивает безопасность проекта.
 
-docker start web-server
 
-Удаление контейнера:
+# ▶️ Запуск
 
-docker rm web-server
+cd lab1
+pip install -r requirements.txt
+python bot.py
 
-<img width="1899" height="1004" alt="image" src="https://github.com/user-attachments/assets/54e5099b-762c-4a09-98ee-3ce1a058c8c7" />
 
-## 7. Работа с томами
+# ✅ Результат
 
-Создание тома:
+Бот успешно запущен и корректно обрабатывает команды пользователя.
 
-docker volume create my-volume
 
-Создание файла в томе:
+# 💡 Вывод
 
-echo “Hello from volume” > /data/test.txt
-
-Проверка сохранения данных в томе.
+В ходе работы были изучены основы создания Telegram-ботов, работа с API и управление зависимостями проекта.
