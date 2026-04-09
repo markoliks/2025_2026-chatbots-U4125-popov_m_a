@@ -6,6 +6,7 @@ Course:  Vibe Coding: AI-боты для бизнеса
 Year: 2025/2026  
 Author: Popov Mark  
 Lab: Lab2  
+Group: U4125
 Date of create: 09.04.2026  
 Date of finished: -  
 # Отчет по лабораторной работе №2
