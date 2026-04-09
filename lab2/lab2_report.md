@@ -122,12 +122,10 @@ df = pd.read_csv("employees.csv")
 
 Поиск по отделу:
 
-```python
 df[df["department"] == department]
 
 Поиск по имени:
 
-```python
 df[df["name"].str.contains(name, case=False)]
 ```
 
