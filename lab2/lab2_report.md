@@ -128,7 +128,7 @@ df[df["department"] == department]
 
 ```python
 df[df["name"].str.contains(name, case=False)]
-
+```
 
 ⸻
 
