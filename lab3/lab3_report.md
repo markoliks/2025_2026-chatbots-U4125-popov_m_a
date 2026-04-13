@@ -1,10 +1,14 @@
-University: ITMO University
-Faculty: FICT
-Course: Vibe Coding: AI-боты для бизнеса Year: 2025/2026
-Author: Popov Mark
-Lab: Lab2
-Group: U4125 Date of create: 09.04.2026
-Date of finished: -
+# Lab 3
+
+University: [ITMO University](https://itmo.ru)  
+Faculty: [FICT](https://fict.itmo.ru)  
+Course:  Vibe Coding: AI-боты для бизнеса
+Year: 2025/2026  
+Author: Popov Mark  
+Lab: Lab2  
+Group: U4125
+Date of create: 09.04.2026  
+Date of finished: -  
 # Лабораторная работа №3  
 ## Запуск бота для реального использования
 
