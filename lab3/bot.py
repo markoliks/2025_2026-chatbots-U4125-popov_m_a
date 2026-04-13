@@ -20,39 +20,56 @@ ENV_PATH = BASE_DIR / ".env"
 EMPLOYEES_CSV_PATH = BASE_DIR / "employees.csv"
 
 
-def load_employees() -> pd.DataFrame:
+def load_employees():
     """
-    Читает таблицу сотрудников из CSV.
-    Проверяет наличие обязательных колонок и возвращает DataFrame.
+    Читает список сотрудников из CSV.
+    Проверяет наличие обязательных колонок.
     """
+    employees = []
+
     try:
-        employees_df = pd.read_csv(EMPLOYEES_CSV_PATH)
+        with open(EMPLOYEES_CSV_PATH, encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            fieldnames = reader.fieldnames or []
+
+            required_columns = {"name", "department", "role", "email"}
+            actual_columns = set(fieldnames)
+            missing_columns = required_columns - actual_columns
+
+            if missing_columns:
+                missing_list = ", ".join(sorted(missing_columns))
+                raise ValueError(
+                    f"В employees.csv отсутствуют обязательные колонки: {missing_list}"
+                )
+
+            for row in reader:
+                employees.append(row)
+
     except FileNotFoundError as exc:
-        raise FileNotFoundError(f"Файл не найден: {EMPLOYEES_CSV_PATH}") from exc
-    except Exception as exc:  # pylint: disable=broad-except
-        raise RuntimeError("Не удалось прочитать employees.csv") from exc
+        raise FileNotFoundError(
+            f"Файл не найден: {EMPLOYEES_CSV_PATH}"
+        ) from exc
+    except Exception as exc:
+        raise RuntimeError(
+            "Не удалось прочитать employees.csv"
+        ) from exc
 
-    required_columns = {"name", "department", "role", "email"}
-    actual_columns = set(employees_df.columns)
-    missing_columns = required_columns - actual_columns
-
-    if missing_columns:
-        missing_list = ", ".join(sorted(missing_columns))
-        raise ValueError(f"В employees.csv нет обязательных колонок: {missing_list}")
-
-    return employees_df
+    return employees
 
 
-def format_employees(employees_df: pd.DataFrame) -> str:
+def format_employees(employees):
     """Форматирует список сотрудников в читаемый текст."""
     lines = []
-    for _, row in employees_df.iterrows():
+
+    for row in employees:
         lines.append(
-            f"{row['name']} | Отдел: {row['department']} | "
-            f"Должность: {row['role']} | Email: {row['email']}"
+            f"Имя: {row['name']}\n"
+            f"Отдел: {row['department']}\n"
+            f"Должность: {row['role']}\n"
+            f"Email: {row['email']}"
         )
 
-    return "\n".join(lines)
+    return "\n\n".join(lines)
 
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
