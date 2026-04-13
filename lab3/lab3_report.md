@@ -1,3 +1,10 @@
+University: ITMO University
+Faculty: FICT
+Course: Vibe Coding: AI-боты для бизнеса Year: 2025/2026
+Author: Popov Mark
+Lab: Lab2
+Group: U4125 Date of create: 09.04.2026
+Date of finished: -
 # Лабораторная работа №3  
 ## Запуск бота для реального использования
 
@@ -23,7 +30,7 @@ Railway был выбран, потому что:
 ---
 
 ## 4. URL бота (или скриншот)
-[вставить ссылку на бота или скриншот Telegram]
+@itmoftmi_pma_bot
 
 ---
 
@@ -80,7 +87,9 @@ Railway был выбран, потому что:
 ---
 
 ## 11. Скриншоты отзывов
-[вставить скриншоты переписок]
+<img width="527" height="339" alt="image" src="https://github.com/user-attachments/assets/1a7baedd-2db2-44ed-b839-dd65042d7b27" />
+<img width="401" height="430" alt="image" src="https://github.com/user-attachments/assets/e136d899-0697-4f6f-95d8-3561bd90d2fa" />
+
 
 ---
 
@@ -125,7 +134,7 @@ Railway был выбран, потому что:
 ## 17. Улучшения
 Были реализованы:
 - кнопочное меню
-- командабрали pandas и и- улучшенные тексты ответов
+- убрали pandas и улучшили тексты ответов
 
 ---
 
@@ -134,6 +143,9 @@ Railway был выбран, потому что:
 - добавлена команда /departments
 - улучшены сообщения об ошибках
 - улучшено форматирование сотрудников
+
+<img width="537" height="998" alt="image" src="https://github.com/user-attachments/assets/27ff1829-34ed-419d-816c-311b3cf0b70c" />
+<img width="532" height="441" alt="image" src="https://github.com/user-attachments/assets/ac7a493d-c9d4-4ca7-bea5-8a8ae4ead9ac" />
 
 ---
 
