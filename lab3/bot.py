@@ -1,8 +1,7 @@
 import logging
 import os
 from pathlib import Path
-
-import pandas as pd
+import csv
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
