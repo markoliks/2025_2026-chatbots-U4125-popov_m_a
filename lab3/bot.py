@@ -3,8 +3,8 @@ import os
 from pathlib import Path
 import csv
 from dotenv import load_dotenv
-from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes
+from telegram import Update, ReplyKeyboardMarkup
+from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
 
 # Базовая настройка логов для диагностики ошибок.
@@ -72,12 +72,22 @@ def format_employees(employees):
     return "\n\n".join(lines)
 
 
+def get_main_keyboard() -> ReplyKeyboardMarkup:
+    """Возвращает главное кнопочное меню."""
+    keyboard = [
+        ["Все сотрудники", "Отделы"],
+        ["Контакты", "Помощь"],
+    ]
+    return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+
+
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Команда /start: приветствие и краткое описание."""
     await update.message.reply_text(
         "Привет! Я учебный Telegram-бот команды.\n"
         "Я могу показать информацию о команде, контактах, событиях и сотрудниках.\n"
-        "Напиши /help, чтобы увидеть список команд."
+        "Напиши /help, чтобы увидеть список команд.",
+        reply_markup=get_main_keyboard(),
     )
 
 
@@ -92,6 +102,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "/team - состав команды\n"
         "/events - расписание событий\n"
         "/employees - показать всех сотрудников\n"
+        "/departments - показать список отделов\n"
         "/department <название_отдела> - показать сотрудников отдела\n"
         "/find <имя> - найти сотрудника по имени"
     )
@@ -133,15 +144,37 @@ async def events_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 async def employees_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Команда /employees: выводит всех сотрудников."""
     try:
-        employees_df = load_employees()
-        if employees_df.empty:
+        employees = load_employees()
+        if not employees:
             await update.message.reply_text("Список сотрудников пуст.")
             return
 
-        await update.message.reply_text("Сотрудники:\n" + format_employees(employees_df))
+        await update.message.reply_text("Сотрудники:\n" + format_employees(employees))
     except Exception as exc:  # pylint: disable=broad-except
         logger.exception("Ошибка в /employees", exc_info=exc)
         await update.message.reply_text("Не удалось получить список сотрудников.")
+
+
+async def departments_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Команда /departments: выводит отсортированный список отделов."""
+    try:
+        employees = load_employees()
+        departments = sorted(
+            {
+                row.get("department", "").strip()
+                for row in employees
+                if row.get("department", "").strip()
+            }
+        )
+
+        if not departments:
+            await update.message.reply_text("Список отделов пуст.")
+            return
+
+        await update.message.reply_text("Отделы:\n" + "\n".join(departments))
+    except Exception as exc:  # pylint: disable=broad-except
+        logger.exception("Ошибка в /departments", exc_info=exc)
+        await update.message.reply_text("Не удалось получить список отделов.")
 
 
 async def department_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -153,19 +186,22 @@ async def department_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
     department_name = " ".join(context.args).strip()
 
     try:
-        employees_df = load_employees()
-        filtered_df = employees_df[
-            employees_df["department"].astype(str).str.lower() == department_name.lower()
+        employees = load_employees()
+        filtered_employees = [
+            row
+            for row in employees
+            if row.get("department", "").strip().lower() == department_name.lower()
         ]
 
-        if filtered_df.empty:
+        if not filtered_employees:
             await update.message.reply_text(
                 f"Сотрудники отдела '{department_name}' не найдены."
             )
             return
 
         await update.message.reply_text(
-            f"Сотрудники отдела '{department_name}':\n{format_employees(filtered_df)}"
+            f"Сотрудники отдела '{department_name}':\n"
+            f"{format_employees(filtered_employees)}"
         )
     except Exception as exc:  # pylint: disable=broad-except
         logger.exception("Ошибка в /department", exc_info=exc)
@@ -181,23 +217,43 @@ async def find_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     search_name = " ".join(context.args).strip()
 
     try:
-        employees_df = load_employees()
-        filtered_df = employees_df[
-            employees_df["name"].astype(str).str.contains(search_name, case=False, na=False)
+        employees = load_employees()
+        search_name_lower = search_name.lower()
+        filtered_employees = [
+            row
+            for row in employees
+            if search_name_lower in row.get("name", "").strip().lower()
         ]
 
-        if filtered_df.empty:
+        if not filtered_employees:
             await update.message.reply_text(
                 f"Сотрудники по запросу '{search_name}' не найдены."
             )
             return
 
         await update.message.reply_text(
-            f"Результаты поиска по '{search_name}':\n{format_employees(filtered_df)}"
+            f"Результаты поиска по '{search_name}':\n"
+            f"{format_employees(filtered_employees)}"
         )
     except Exception as exc:  # pylint: disable=broad-except
         logger.exception("Ошибка в /find", exc_info=exc)
         await update.message.reply_text("Не удалось выполнить поиск сотрудника.")
+
+
+async def text_menu_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обрабатывает нажатия на кнопки главного меню."""
+    if not update.message or not update.message.text:
+        return
+
+    text = update.message.text.strip()
+    if text == "Все сотрудники":
+        await employees_command(update, context)
+    elif text == "Отделы":
+        await departments_command(update, context)
+    elif text == "Контакты":
+        await contacts_command(update, context)
+    elif text == "Помощь":
+        await help_command(update, context)
 
 
 async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -228,8 +284,12 @@ def main() -> None:
 
     # Новые команды для работы с CSV.
     application.add_handler(CommandHandler("employees", employees_command))
+    application.add_handler(CommandHandler("departments", departments_command))
     application.add_handler(CommandHandler("department", department_command))
     application.add_handler(CommandHandler("find", find_command))
+    application.add_handler(
+        MessageHandler(filters.TEXT & ~filters.COMMAND, text_menu_handler)
+    )
 
     # Глобальная обработка ошибок.
     application.add_error_handler(error_handler)
