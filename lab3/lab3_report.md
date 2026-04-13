@@ -94,6 +94,7 @@ Railway был выбран, потому что:
 <img width="527" height="339" alt="image" src="https://github.com/user-attachments/assets/1a7baedd-2db2-44ed-b839-dd65042d7b27" />
 <img width="401" height="430" alt="image" src="https://github.com/user-attachments/assets/e136d899-0697-4f6f-95d8-3561bd90d2fa" />
 <img width="1179" height="1804" alt="image" src="https://github.com/user-attachments/assets/b6520bdb-2047-4239-a5af-4a6e08fae879" />
+<img width="538" height="870" alt="image" src="https://github.com/user-attachments/assets/75310fdc-9344-4a3d-bd6b-bb9d2b7362c2" />
 
 
 ---
